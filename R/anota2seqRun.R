@@ -68,6 +68,21 @@ anota2seqRun <- function(Anota2seqDataSet,contrasts = NULL,
     
     ## If parameters are specified check them
     if(!is.null(thresholds)){
+        
+        ## reset parameter list
+        parameters <- list(minSlopeTranslation = NULL,
+                           maxSlopeTranslation = NULL,
+                           minSlopeBuffering = NULL,
+                           maxSlopeBuffering = NULL,
+                           maxPAdj = NULL,
+                           maxP = NULL,
+                           minEff = NULL,
+                           deltaPT = NULL,
+                           deltaTP = NULL,
+                           deltaP = NULL,
+                           deltaT = NULL)
+        
+        
         for(paramNames in 1:length(thresholds)){
             if(names(thresholds)[paramNames]%in%names(parameters) == FALSE){
                 message(paste("ERROR:" ,
@@ -76,6 +91,7 @@ anota2seqRun <- function(Anota2seqDataSet,contrasts = NULL,
                               ,sep=""))
                 stop()
             }
+            ## Fill parameter list with user defined parameters
             if(names(thresholds)[paramNames]%in%names(parameters) == TRUE){
                 tmpName<- names(thresholds)[paramNames]
                 parameters[tmpName] <- thresholds[tmpName]

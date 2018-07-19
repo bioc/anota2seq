@@ -29,7 +29,7 @@ Returns a list of gene identifiers for each contrast and regulatory mode separat
 The function is used to retrieve a list of directed regulations for all regulatory modes or translation and buffering regulatory modes seperately. Each regulatory mode is split into up and down regulated based on the sign of the apvEff column in the anota2seqSelSigGenes or anota2seqRegModes output.
 }
 \details{
-This function is used to separate the output of anota2seqSelSigGenes or anota2seqRegModes for each regulatory mode into up and down regulated mRNAs. A list of directed regulations for all regulatory modes, i.e. translation, buffering and mRNA abundance can be retrieved using getRegMode parameter set to all, for this option anota2seqRegModes needs to be run on the Anota2seqDataSet. Alternatively, it is possible to retrieve directed regulations for translation and buffering separately by providing the appropriate getRegMode parameter, i.e translation or buffering. For this option anota2seqSelSigGenes needs to be run on the anota2seqDataset.  
+This function is used to separate the output of anota2seqSelSigGenes or anota2seqRegModes for each regulatory mode into up and down regulated mRNAs. A list of directed regulations for all regulatory modes, i.e. translation, buffering and mRNA abundance can be retrieved using getRegMode parameter set to all, for this option anota2seqRegModes needs to be run on the Anota2seqDataSet. Alternatively, it is possible to retrieve directed regulations for translation and buffering separately by providing the appropriate getRegMode parameter, i.e translation or buffering. For this option depending on whether anota2seqSelSigGens or anota2seqRegModes has been run previously on the Anota2seqDataSet, the returned list will be filtered additionally based on the "singleRegMode"" column (see \link{anota2seqRegModes}).
 }
 \examples{
 # Initialize the Anota2seqDataSet
@@ -58,7 +58,8 @@ translationResultsDirected <- anota2seqGetDirectedRegulations(Anota2seqDataSet,
 
 }
 \seealso{
-\code{\link{anota2seqRun}}, 
+
+\link{anota2seqRun}, 
   \code{\link{anota2seqAnalyze}}, \code{\link{anota2seqSelSigGenes}}, 
-  \code{\link{anota2seqRegModes}, \code{\link{anota2seqGetOutput}}}
+  \code{\link{anota2seqRegModes}}, \code{\link{anota2seqGetOutput}}
 }

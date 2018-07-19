@@ -1124,16 +1124,16 @@ setMethod("anota2seqGetDirectedRegulations","Anota2seqDataSet",
                               anota2seqGetOutput(object = ads,analysis = "translation",output = "selected",getRVM = getRVM,selContrast = c)[,"singleRegMode"] == "translation",
                           ]
                       translationDown <-anota2seqGetOutput(object = ads,analysis = "translation",output = "selected",getRVM = getRVM,selContrast = c)[
-                          anota2seqGetOutput(object = ads,analysis = "translation",output = "selected",getRVM = getRVM,,selContrast = c)[,"apvEff"] < 0 &
+                          anota2seqGetOutput(object = ads,analysis = "translation",output = "selected",getRVM = getRVM,selContrast = c)[,"apvEff"] < 0 &
                               anota2seqGetOutput(object = ads,analysis = "translation",output = "selected",getRVM = getRVM,selContrast = c)[,"singleRegMode"] == "translation",
                           ]
                       ##Get buffering directed output
-                      bufferingUp <- anota2seqGetOutput(object = ads,analysis = "buffering",output = "selected",getRVM = getRVM,selContrast = c)[
-                          anota2seqGetOutput(object = ads,analysis = "buffering",output = "selected",getRVM = getRVM,,selContrast = c)[,"apvEff"] > 0 &
+                      bufferingmRNAUp <- anota2seqGetOutput(object = ads,analysis = "buffering",output = "selected",getRVM = getRVM,selContrast = c)[
+                          anota2seqGetOutput(object = ads,analysis = "buffering",output = "selected",getRVM = getRVM,selContrast = c)[,"apvEff"] > 0 &
                               anota2seqGetOutput(object = ads,analysis = "buffering",output = "selected",getRVM = getRVM,selContrast = c)[,"singleRegMode"] == "buffering",
                           ]
-                      bufferingDown <-anota2seqGetOutput(object = ads,analysis = "buffering",output = "selected",getRVM = getRVM,selContrast = c)[
-                          anota2seqGetOutput(object = ads,analysis = "buffering",output = "selected",getRVM = getRVM,,selContrast = c)[,"apvEff"] < 0 &
+                      bufferingmRNADown <-anota2seqGetOutput(object = ads,analysis = "buffering",output = "selected",getRVM = getRVM,selContrast = c)[
+                          anota2seqGetOutput(object = ads,analysis = "buffering",output = "selected",getRVM = getRVM,selContrast = c)[,"apvEff"] < 0 &
                               anota2seqGetOutput(object = ads,analysis = "buffering",output = "selected",getRVM = getRVM,selContrast = c)[,"singleRegMode"] == "buffering",
                           ]
                       
@@ -1170,26 +1170,26 @@ setMethod("anota2seqGetDirectedRegulations","Anota2seqDataSet",
                       }
                       if(object@selectedBuffering@regModes == TRUE){
                       ##Get buffering directed output
-                      bufferingUp <- anota2seqGetOutput(object = ads,analysis = "buffering",output = "selected",getRVM = getRVM,selContrast = c)[
+                          bufferingmRNAUp <- anota2seqGetOutput(object = ads,analysis = "buffering",output = "selected",getRVM = getRVM,selContrast = c)[
                           
                           anota2seqGetOutput(object = ads,analysis = "buffering",output = "selected",getRVM = getRVM,selContrast = c)[,"apvEff"]> 0 &
                               
                               anota2seqGetOutput(object = ads,analysis = "buffering",output = "selected",getRVM = getRVM,selContrast = c)[,"singleRegMode"] == "buffering",
                           ]
                       
-                      bufferingDown <- anota2seqGetOutput(object = ads,analysis = "buffering",output = "selected",getRVM = getRVM,selContrast = c)[
-                          anota2seqGetOutput(object = ads,analysis = "buffering",output = "selected",getRVM = getRVM,,selContrast = c)[,"apvEff"] < 0 &
+                      bufferingmRNADown <- anota2seqGetOutput(object = ads,analysis = "buffering",output = "selected",getRVM = getRVM,selContrast = c)[
+                          anota2seqGetOutput(object = ads,analysis = "buffering",output = "selected",getRVM = getRVM,selContrast = c)[,"apvEff"] < 0 &
                               anota2seqGetOutput(object = ads,analysis = "buffering",output = "selected",getRVM = getRVM,selContrast = c)[,"singleRegMode"] == "buffering",
                           ]
                       }
                       if(object@selectedBuffering@regModes == FALSE){
-                          bufferingUp <- anota2seqGetOutput(object = ads,analysis = "buffering",output = "selected",getRVM = getRVM,selContrast = c)[
+                          bufferingmRNAUp <- anota2seqGetOutput(object = ads,analysis = "buffering",output = "selected",getRVM = getRVM,selContrast = c)[
                               
                               anota2seqGetOutput(object = ads,analysis = "buffering",output = "selected",getRVM = getRVM,selContrast = c)[,"apvEff"]> 0 ,
                               ]
                           
-                          bufferingDown <- anota2seqGetOutput(object = ads,analysis = "buffering",output = "selected",getRVM = getRVM,selContrast = c)[
-                              anota2seqGetOutput(object = ads,analysis = "buffering",output = "selected",getRVM = getRVM,,selContrast = c)[,"apvEff"] < 0 ,
+                          bufferingmRNADown <- anota2seqGetOutput(object = ads,analysis = "buffering",output = "selected",getRVM = getRVM,selContrast = c)[
+                              anota2seqGetOutput(object = ads,analysis = "buffering",output = "selected",getRVM = getRVM,selContrast = c)[,"apvEff"] < 0 ,
                               ] 
                       }
                       regModeList[[c]] <- list(

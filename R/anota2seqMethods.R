@@ -1089,7 +1089,7 @@ setMethod("anota2seqGetAvailableAnalyzes","Anota2seqDataSet",
           })
 
 setMethod("anota2seqGetDirectedRegulations","Anota2seqDataSet",
-          functions(object,getRegMode="all",getRVM=TRUE){
+          function(object,getRegMode="all",getRVM=TRUE){
               
               ads <- object
               if(is.null(getRegMode)){
@@ -1109,6 +1109,7 @@ setMethod("anota2seqGetDirectedRegulations","Anota2seqDataSet",
               }
               
               regModeList <- rep(list(NA),ncol(object@contrasts))
+              
               for( c in 1:ncol(object@contrasts)){
                   
                   if(getRegMode == "all"){
@@ -1119,21 +1120,21 @@ setMethod("anota2seqGetDirectedRegulations","Anota2seqDataSet",
                       # Get the proper regulatory modes and store them in the list.
                       # Get translation output
                       translationUp <- anota2seqGetOutput(object = ads,analysis = "translation",output = "selected",getRVM = getRVM,selContrast = c)[
-                          anota2seqGetOutput(object = ads,analysis = "translation",output = "selected",getRVM = getRVM,,selContrast = c)[,"apvEff"] > 0 &
-                              anota2seqGetOutput(object = ads,analysis = "translation",output = "selected",getRVM = getRVM,,selContrast = c)[,"singleRegMode"] == "translation",
+                          anota2seqGetOutput(object = ads,analysis = "translation",output = "selected",getRVM = getRVM,selContrast = c)[,"apvEff"] > 0 &
+                              anota2seqGetOutput(object = ads,analysis = "translation",output = "selected",getRVM = getRVM,selContrast = c)[,"singleRegMode"] == "translation",
                           ]
                       translationDown <-anota2seqGetOutput(object = ads,analysis = "translation",output = "selected",getRVM = getRVM,selContrast = c)[
                           anota2seqGetOutput(object = ads,analysis = "translation",output = "selected",getRVM = getRVM,,selContrast = c)[,"apvEff"] < 0 &
-                              anota2seqGetOutput(object = ads,analysis = "translation",output = "selected",getRVM = getRVM,,selContrast = c)[,"singleRegMode"] == "translation",
+                              anota2seqGetOutput(object = ads,analysis = "translation",output = "selected",getRVM = getRVM,selContrast = c)[,"singleRegMode"] == "translation",
                           ]
                       ##Get buffering directed output
                       bufferingUp <- anota2seqGetOutput(object = ads,analysis = "buffering",output = "selected",getRVM = getRVM,selContrast = c)[
                           anota2seqGetOutput(object = ads,analysis = "buffering",output = "selected",getRVM = getRVM,,selContrast = c)[,"apvEff"] > 0 &
-                              anota2seqGetOutput(object = ads,analysis = "buffering",output = "selected",getRVM = getRVM,,selContrast = c)[,"singleRegMode"] == "buffering",
+                              anota2seqGetOutput(object = ads,analysis = "buffering",output = "selected",getRVM = getRVM,selContrast = c)[,"singleRegMode"] == "buffering",
                           ]
                       bufferingDown <-anota2seqGetOutput(object = ads,analysis = "buffering",output = "selected",getRVM = getRVM,selContrast = c)[
                           anota2seqGetOutput(object = ads,analysis = "buffering",output = "selected",getRVM = getRVM,,selContrast = c)[,"apvEff"] < 0 &
-                              anota2seqGetOutput(object = ads,analysis = "buffering",output = "selected",getRVM = getRVM,,selContrast = c)[,"singleRegMode"] == "buffering",
+                              anota2seqGetOutput(object = ads,analysis = "buffering",output = "selected",getRVM = getRVM,selContrast = c)[,"singleRegMode"] == "buffering",
                           ]
                       
                       #get mRNA abundance output
@@ -1163,19 +1164,34 @@ setMethod("anota2seqGetDirectedRegulations","Anota2seqDataSet",
                   
                   
                   if(getRegMode == "buffering"){
-                      if(is.null(anota2seqGetOutputClass(object,analysis = "buffering","selected")){
+                      
+                      if(is.null(anota2seqGetOutputClass(object,analysis = "buffering","selected"))){
                           stop("No selected buffering output found. Please run the anota2seqSelSigGenes with analysis parameter set to buffering on the object before retrieving buffering directed regulations.\n")
                       }
+                      if(object@selectedBuffering@regModes == TRUE){
+                      ##Get buffering directed output
+                      bufferingUp <- anota2seqGetOutput(object = ads,analysis = "buffering",output = "selected",getRVM = getRVM,selContrast = c)[
+                          
+                          anota2seqGetOutput(object = ads,analysis = "buffering",output = "selected",getRVM = getRVM,selContrast = c)[,"apvEff"]> 0 &
+                              
+                              anota2seqGetOutput(object = ads,analysis = "buffering",output = "selected",getRVM = getRVM,selContrast = c)[,"singleRegMode"] == "buffering",
+                          ]
                       
-                      # get buffering output
-                      bufferingmRNAUp <- object@selectedBuffering@selectedRvmData[[c]][
-                          object@selectedBuffering@selectedRvmData[[c]][,"apvEff"] > 0 &
-                              object@selectedBuffering@selectedRvmData[[c]][,"singleRegMode"] == "buffering",
+                      bufferingDown <- anota2seqGetOutput(object = ads,analysis = "buffering",output = "selected",getRVM = getRVM,selContrast = c)[
+                          anota2seqGetOutput(object = ads,analysis = "buffering",output = "selected",getRVM = getRVM,,selContrast = c)[,"apvEff"] < 0 &
+                              anota2seqGetOutput(object = ads,analysis = "buffering",output = "selected",getRVM = getRVM,selContrast = c)[,"singleRegMode"] == "buffering",
                           ]
-                      bufferingmRNADown <- object@selectedBuffering@selectedRvmData[[c]][
-                          object@selectedBuffering@selectedRvmData[[c]][,"apvEff"] < 0 &
-                              object@selectedBuffering@selectedRvmData[[c]][,"singleRegMode"] == "buffering",
-                          ]
+                      }
+                      if(object@selectedBuffering@regModes == FALSE){
+                          bufferingUp <- anota2seqGetOutput(object = ads,analysis = "buffering",output = "selected",getRVM = getRVM,selContrast = c)[
+                              
+                              anota2seqGetOutput(object = ads,analysis = "buffering",output = "selected",getRVM = getRVM,selContrast = c)[,"apvEff"]> 0 ,
+                              ]
+                          
+                          bufferingDown <- anota2seqGetOutput(object = ads,analysis = "buffering",output = "selected",getRVM = getRVM,selContrast = c)[
+                              anota2seqGetOutput(object = ads,analysis = "buffering",output = "selected",getRVM = getRVM,,selContrast = c)[,"apvEff"] < 0 ,
+                              ] 
+                      }
                       regModeList[[c]] <- list(
                           "bufferingmRNAUp" = rownames(bufferingmRNAUp),
                           "bufferingmRNADown" = rownames(bufferingmRNADown)
@@ -1188,19 +1204,33 @@ setMethod("anota2seqGetDirectedRegulations","Anota2seqDataSet",
                   
                   if(getRegMode == "translation"){
                       
-                      if(is.null(anota2seqGetOutputClass(object,analysis = "translation","selected")){
+                      if(is.null(anota2seqGetOutputClass(object,analysis = "translation","selected"))){
                           stop("No selected translation output found. Please run the anota2seqSelSigGenes with analysis parameter set to translation on the object before retrieving translation directed regulations.\n")
                       }
                       
                       #get translation output
-                      translationUp <- object@selectedTranslation@selectedRvmData[[c]][
-                          object@selectedTranslation@selectedRvmData[[c]][,"apvEff"] > 0 &
-                              object@selectedTranslation@selectedRvmData[[c]][,"singleRegMode"] == "translation",
+                      # Get translation output
+                      if(object@selectedTranslation@regModes == TRUE){
+                      translationUp <- anota2seqGetOutput(object = ads,analysis = "translation",output = "selected",getRVM = getRVM,selContrast = c)[
+                          anota2seqGetOutput(object = ads,analysis = "translation",output = "selected",getRVM = getRVM,selContrast = c)[,"apvEff"] > 0 &
+                              anota2seqGetOutput(object = ads,analysis = "translation",output = "selected",getRVM = getRVM,selContrast = c)[,"singleRegMode"] == "translation",
                           ]
-                      translationDown <-object@selectedTranslation@selectedRvmData[[c]][
-                          object@selectedTranslation@selectedRvmData[[c]][,"apvEff"] < 0 &
-                              object@selectedTranslation@selectedRvmData[[c]][,"singleRegMode"] == "translation",
+                      translationDown <-anota2seqGetOutput(object = ads,analysis = "translation",output = "selected",getRVM = getRVM,selContrast = c)[
+                          anota2seqGetOutput(object = ads,analysis = "translation",output = "selected",getRVM = getRVM,selContrast = c)[,"apvEff"] < 0 &
+                              anota2seqGetOutput(object = ads,analysis = "translation",output = "selected",getRVM = getRVM,selContrast = c)[,"singleRegMode"] == "translation",
                           ]
+                      
+                      }
+                      
+                      if(object@selectedTranslation@regModes == FALSE){
+                          
+                          translationUp <- anota2seqGetOutput(object = ads,analysis = "translation",output = "selected",getRVM = getRVM,selContrast = c)[
+                              anota2seqGetOutput(object = ads,analysis = "translation",output = "selected",getRVM = getRVM,selContrast = c)[,"apvEff"] > 0,
+                              ]
+                          translationDown <-anota2seqGetOutput(object = ads,analysis = "translation",output = "selected",getRVM = getRVM,selContrast = c)[
+                              anota2seqGetOutput(object = ads,analysis = "translation",output = "selected",getRVM = getRVM,selContrast = c)[,"apvEff"] < 0 ,
+                              ] 
+                      }
                       regModeList[[c]] <- list("translationUp" = rownames(translationUp),
                                                "translationDown" = rownames(translationDown)
                       )

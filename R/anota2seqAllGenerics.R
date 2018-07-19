@@ -19,6 +19,7 @@ setGeneric("anota2seqGetThresholds",
            function(object,analysis,selContrast) standardGeneric("anota2seqGetThresholds"))
 setGeneric("anota2seqGetAvailableAnalyzes",
            function(object) standardGeneric("anota2seqGetAvailableAnalyzes"))
+
 setGeneric("anota2seqGetDirectedRegulations",
            function(object,getRegMode = "all",getRVM=TRUE) standardGeneric("anota2seqGetDirectedRegulations"))
 

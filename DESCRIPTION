@@ -1,5 +1,5 @@
 Package: anota2seq
-Version: 1.5.0
+Version: 1.5.1
 Title: Generally applicable transcriptome-wide analysis of
         translational efficiency using anota2seq
 Author: Christian Oertlin <christian.oertlin@ki.se>, Julie Lorent <julie.lorent@ki.se>, Ola Larsson <ola.larsson@ki.se>
@@ -11,7 +11,7 @@ LazyData: yes
 LazyLoad: yes
 Imports: multtest,qvalue,limma,DESeq2,edgeR,RColorBrewer, grDevices,
         graphics, stats, utils, SummarizedExperiment
-biocViews: GeneExpression, DifferentialExpression,
+biocViews: ImmunoOncology, GeneExpression, DifferentialExpression,
         Microarray,GenomeWideAssociation, BatchEffect, Normalization,
         RNASeq, Sequencing, GeneRegulation, Regression
 NeedsCompilation: no

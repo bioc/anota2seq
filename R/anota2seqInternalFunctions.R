@@ -84,7 +84,7 @@ showRegModeOutput <- function(Anota2seqDataSet,regMode,analysis){
         cat("No regulatory modes specified.\n")
     }
     # Display regModes gene number for transation, buffering and mRNA abundance for each contrast...
-    if(Anota2seqDataSet@selectedTranslation@regModes == TRUE){
+    if(Anota2seqDataSet@regModes == TRUE){
         # get the selectedOutput class ...
         if(is.null(anota2seqGetOutputClass(Anota2seqDataSet,analysis,"selected")) == FALSE){
             outSelClass <- anota2seqGetOutputClass(Anota2seqDataSet,analysis,"selected")
@@ -228,10 +228,13 @@ s4MethodChecks <- function(object,selContrast,output,analysis,useRVM,getRVM,visu
             stop("Please provide the output parameter.\n Must be one of the following: full, selected or regModes.\n")
         }
         if(length(output) > 1){
-            stop("output parameter must be set to either full, selected or regModes.\n")
+            stop("output parameter must be set to either full, selected, regModes or singleDf\n")
         }
-        if(!output %in% c("full","selected","regModes")){
-            stop("output parameter wrong ... must be either full or selected.\n")
+        if(!output %in% c("full","selected","regModes","singleDf")){
+            stop("output parameter wrong ... must be either full, selected, regModes or singleDf\n")
+        }
+        if(output == "singleDf"){
+            analysis <- "translation"
         }
         if(is.null(analysis) == TRUE){
             stop("Please provide the analysis parameter.\nMust be one of the following: translated mRNA, total mRNA, translation, buffering or mRNA abundance.")

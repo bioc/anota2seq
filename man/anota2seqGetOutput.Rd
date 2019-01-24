@@ -15,14 +15,18 @@ anota2seqGetOutput(object, analysis, output, selContrast, getRVM = TRUE)
 \item{object}{An Anota2seqDataSet}
 
 \item{analysis}{A character string that can be "translated mRNA", "total 
-mRNA", "translation", "buffering" or "mRNA abundance".}
+mRNA", "translation", "buffering" or "mRNA abundance". This parameter is not needed when the output parameter is set to "singleDf".}
 
 \item{output}{A character string specifying whether the output of the 
 anota2seqAnalyze ("full") or the anota2seqSelSigGenes ("selected") function
 should be returned. This parameter can also be set to "regModes" in which 
 case the output of anota2seqRegModes is returned (i.e. identifiers which 
-were given as single regulatory mode, the value of the "analysis" 
-parameter)}
+were given as single regulatory mode).Lastly, the parameter can be set to "singleDf"
+in this case the function returns a single data frame with apvEff and apvRvmPadj values for
+translated mRNA, total mRNA, translation and buffering. Additionally,there is a column "singleRegMode" 
+indicating the regulatory mode the identifier belongs to and corresponds to the visualization
+with the \code{\link{anota2seqPlotFC}} function.
+}
 
 \item{selContrast}{A numeric vector specifying for which contrast the output 
 should be retrieved. The contrast number corresponds to the position of the
@@ -102,7 +106,10 @@ each gene has a unique regulatory mode. For this, we prioritize regulatory
 patterns so that translation > mRNA abundance > buffering (i.e. if an 
 identifier is found as changing its translational efficiency leading to 
 altered protein levels and mRNA abundance it will be removed from the mRNA 
-abundance group).
+abundance group). Lastly, to access a single data frame with 
+merged apvEff and apvRvmPAdj results only from the analysis of translated mRNA, total mRNA,
+translation and buffering with indicated regulatory mode for each identifier the parameter
+can be set to output = "singleDf".
 }
 \examples{
 # Initialize the Anota2seqDataSet

@@ -45,16 +45,14 @@ setClass("Anota2seqSelectedOutput",
              selectedRvmData = "listOrNULL",
              useRVM = "logical",
              deltaData = "listOrNULL",
-             usedThresholds = "listOrNULL",
-             regModes = "logical"
+             usedThresholds = "listOrNULL"
          ))
 setClass("Anota2seqMRNAabundanceOutput",
          slots = c(
              totalmRNA = "listOrNULL",
              translatedmRNA = "listOrNULL",
              useRVM = "logical",
-             mRNASelect = "logical",
-             regModes = "logical"
+             mRNASelect = "logical"
          ))
 setClassUnion("qcOrNULL",members = c("Anota2seqQualityControl", "NULL"))
 setClassUnion("residOrNULL", members = c("Anota2seqResidOutlierTest", "NULL"))
@@ -79,6 +77,7 @@ setClass("Anota2seqDataSet",
              selectedTranslation = "selOutOrNULL",
              selectedBuffering = "selOutOrNULL",
              mRNAAbundance = "abundOrNULL",
-             deltaData = "listOrNULL"
+             deltaData = "listOrNULL",
+             regModes = "logical"
          ))
 

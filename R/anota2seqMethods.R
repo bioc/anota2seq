@@ -185,7 +185,7 @@ setMethod("anota2seqGetOutput","Anota2seqDataSet",
                   }
                   if(analysis == "translation"){
                       if(is.null(object@selectedTranslation) == FALSE){
-                          if(object@selectedTranslation@regModes == FALSE){
+                          if(object@regModes == FALSE){
                               stop("No anota2seqRegModes output found for translation analysis.\nPlease run the anota2seqRegModes function on the Anota2seqDataSet.\n")
                           }
                           if(getRVM != object@selectedTranslation@useRVM){
@@ -211,7 +211,7 @@ setMethod("anota2seqGetOutput","Anota2seqDataSet",
                   
                   if(analysis == "buffering"){
                       if(is.null(object@selectedBuffering) == FALSE){
-                          if(object@selectedBuffering@regModes == FALSE){
+                          if(object@regModes == FALSE){
                               stop("No anota2seqRegModes output found for buffering analysis.\nPlease run the anota2seqRegModes function on the Anota2seqDataSet.\n")
                           }
                           if(getRVM != object@selectedBuffering@useRVM){
@@ -244,7 +244,7 @@ setMethod("anota2seqGetOutput","Anota2seqDataSet",
                                          " while anota2seqSelSigGenes was run with parameter useRVM ",
                                          object@mRNAAbundance@useRVM,".\nPlease provide correct RVM parameter.\n"))
                           }
-                          if(object@mRNAAbundance@regModes == FALSE){
+                          if(object@regModes == FALSE){
                               stop("No anota2seqRegModes output found for mRNA abundance analysis.\nPlease run the anota2seqRegModes function on the Anota2seqDataSet.\n")
                           }
                           mRNASelect <- object@mRNAAbundance@mRNASelect
@@ -262,6 +262,110 @@ setMethod("anota2seqGetOutput","Anota2seqDataSet",
                       }
                   }
               }#if regModes
+              
+              
+              if(output == "singleDf"){
+                  if(object@regModes == FALSE){
+                      stop("The anota2seqRegModes function has to be run on the Anota2seqDataSet before extracting directed regulations.\n")
+                  }
+                  
+                  if(getRVM != object@selectedBuffering@useRVM | 
+                     getRVM != object@selectedTranslation@useRVM | 
+                     getRVM != object@mRNAAbundance@useRVM){
+                      stop(paste("Can only retrieve selected data with RVM status used in anota2seqSelSigGenes.\n",
+                                 "getRVM parameter is set to ",
+                                 getRVM,
+                                 " while anota2seqSelSigGenes was run with parameter useRVM ",
+                                 object@selectedBuffering@useRVM,".\nPlease provide correct RVM parameter.\n"))
+                  }
+                  getRVM <- object@selectedTranslation@useRVM
+                  
+                  if(getRVM == TRUE){
+                      directOut <- data.frame(identifier = rownames(object@dataP),
+                                              "translatedmRNA.apvEff" = object@translatedmRNA@apvStatsRvm[[selContrast]][,"apvEff"],
+                                              "translatedmRNA.apvRvmPAdj" = object@translatedmRNA@apvStatsRvm[[selContrast]][,"apvRvmPAdj"],
+                                              "totalmRNA.apvEff" = object@totalmRNA@apvStatsRvm[[selContrast]][,"apvEff"],
+                                              "totalmRNA.apvRvmPAdj" = object@totalmRNA@apvStatsRvm[[selContrast]][,"apvRvmPAdj"],
+                                              "translation.apvEff" = object@translation@apvStatsRvm[[selContrast]][,"apvEff"],
+                                              "translation.apvRvmPAdj" = object@translation@apvStatsRvm[[selContrast]][,"apvRvmPAdj"],
+                                              "buffering.apvEff" = object@buffering@apvStatsRvm[[selContrast]][,"apvEff"],
+                                              "buffering.apvRvmPAdj" = object@buffering@apvStatsRvm[[selContrast]][,"apvRvmPAdj"]
+                      )
+                  directOut$singleRegMode <- "background"
+                  
+                  directOut$singleRegMode[rownames(directOut) %in% 
+                                              rownames(object@selectedTranslation@selectedRvmData[[selContrast]])
+                                          [object@selectedTranslation@selectedRvmData[[selContrast]][,"singleRegMode"] == "translation"]] <- "translation"
+                  
+                  directOut$singleRegMode[rownames(directOut) %in% 
+                                              rownames(object@selectedBuffering@selectedRvmData[[selContrast]])[
+                                                  object@selectedBuffering@selectedRvmData[[selContrast]][
+                                                      ,"singleRegMode"] == "buffering"]] <- "buffering"
+                  
+                  if((object@mRNAAbundance@mRNASelect[1] == TRUE & object@mRNAAbundance@mRNASelect[2] == FALSE)| 
+                     (object@mRNAAbundance@mRNASelect[1] == TRUE & object@mRNAAbundance@mRNASelect[2] == TRUE)){     
+                      directOut$singleRegMode[rownames(directOut) %in% 
+                                                  rownames(object@mRNAAbundance@totalmRNA[[selContrast]])[
+                                                      object@mRNAAbundance@totalmRNA[[selContrast]][
+                                                          ,"singleRegMode"] == "abundance"]] <- "abundance"
+                      
+                  }
+                  if(object@mRNAAbundance@mRNASelect[1] == FALSE & object@mRNAAbundance@mRNASelect[2] == TRUE){
+                      directOut$singleRegMode[rownames(directOut) %in% 
+                                                  rownames(object@mRNAAbundance@translatedmRNA[[selContrast]])[
+                                                      object@mRNAAbundance@translatedmRNA[[selContrast]][
+                                                          ,"singleRegMode"] == "abundance"]] <- "abundance"
+                  }
+                  
+              }
+                  
+                  if(getRVM==FALSE){
+                      directOut <- data.frame(identifier = rownames(object@dataP),
+                                              "translatedmRNA.apvEff" = object@translatedmRNA@apvStats[[selContrast]][,"apvEff"],
+                                              "translatedmRNA.apvPAdj" = object@translatedmRNA@apvStats[[selContrast]][,"apvPAdj"],
+                                              "totalmRNA.apvEff" = object@totalmRNA@apvStats[[selContrast]][,"apvEff"],
+                                              "totalmRNA.apvPAdj" = object@totalmRNA@apvStats[[selContrast]][,"apvPAdj"],
+                                              "translation.apvEff" = object@translation@apvStats[[selContrast]][,"apvEff"],
+                                              "translation.apvPAdj" = object@translation@apvStats[[selContrast]][,"apvPAdj"],
+                                              "buffering.apvEff" = object@buffering@apvStats[[selContrast]][,"apvEff"],
+                                              "buffering.apvAdj" = object@buffering@apvStats[[selContrast]][,"apvPAdj"]
+                      )
+                      directOut$singleRegMode <- "background"
+                      
+                      directOut$singleRegMode[rownames(directOut) %in% 
+                                                  rownames(object@selectedTranslation@selectedData[[selContrast]])
+                                              [object@selectedTranslation@selectedData[[selContrast]][,"singleRegMode"] == "translation"]] <- "translation"
+                      
+                      directOut$singleRegMode[rownames(directOut) %in% 
+                                                  rownames(object@selectedBuffering@selectedData[[selContrast]])[
+                                                      object@selectedBuffering@selectedData[[selContrast]][
+                                                          ,"singleRegMode"] == "buffering"]] <- "buffering"
+                      
+                      if((object@mRNAAbundance@mRNASelect[1] == TRUE & object@mRNAAbundance@mRNASelect[2] == FALSE)| 
+                         (object@mRNAAbundance@mRNASelect[1] == TRUE & object@mRNAAbundance@mRNASelect[2] == TRUE)){     
+                          directOut$singleRegMode[rownames(directOut) %in% 
+                                                      rownames(object@mRNAAbundance@totalmRNA[[selContrast]])[
+                                                          object@mRNAAbundance@totalmRNA[[selContrast]][
+                                                              ,"singleRegMode"] == "abundance"]] <- "abundance"
+                          
+                      }
+                      if(object@mRNAAbundance@mRNASelect[1] == FALSE & object@mRNAAbundance@mRNASelect[2] == TRUE){
+                          directOut$singleRegMode[rownames(directOut) %in% 
+                                                      rownames(object@mRNAAbundance@translatedmRNA[[selContrast]])[
+                                                          object@mRNAAbundance@translatedmRNA[[selContrast]][
+                                                              ,"singleRegMode"] == "abundance"]] <- "abundance"
+                      }
+                      
+                      
+                      
+                  }
+                  return(directOut)
+                
+              }
+              
+              
+              
+              
           })
 setMethod("anota2seqGetQualityControl","Anota2seqDataSet",
           function(object){
@@ -390,7 +494,7 @@ setMethod("anota2seqPlotFC","Anota2seqDataSet",
                   }
               }
               if(visualizeRegModes == "all"){
-                  if(anota2seqGetOutputClass(object,analysis = "translation","selected")@regModes == FALSE){
+                  if(object@regModes == FALSE){
                       stop("No regModes found. Please run the anota2seqRegModes function on the object before generating fold change plots.\n")
                   }
               }
@@ -1043,7 +1147,7 @@ setMethod("anota2seqSetSelectedOutput","Anota2seqDataSet",
                   #object@selectedPolysomeassociatedmRNA@groupIntercepts[[contrast]] <-input[["groupIntercepts"]]
                   object@selectedTranslatedmRNA@deltaData[[selContrast]] <-input[["deltaData"]]
                   object@selectedTranslatedmRNA@usedThresholds[[selContrast]] <-input[["usedThresholds"]]
-                  object@selectedTranslatedmRNA@regModes[[selContrast]] <-input[["regModes"]]
+                  #object@selectedTranslatedmRNA@regModes[[selContrast]] <-input[["regModes"]]
                   
                   
               }
@@ -1053,7 +1157,7 @@ setMethod("anota2seqSetSelectedOutput","Anota2seqDataSet",
                   #object@selectedTotalmRNA@groupIntercepts[[contrast]] <-input[["groupIntercepts"]]
                   object@selectedTotalmRNA@deltaData[[selContrast]] <-input[["deltaData"]]
                   object@selectedTotalmRNA@usedThresholds[[selContrast]] <-input[["usedThresholds"]]
-                  object@selectedTotalmRNA@regModes[[selContrast]] <-input[["regModes"]]
+                  # object@selectedTotalmRNA@regModes[[selContrast]] <-input[["regModes"]]
               }
               if(analysis == "translation"){
                   
@@ -1062,7 +1166,7 @@ setMethod("anota2seqSetSelectedOutput","Anota2seqDataSet",
                   #object@selectedTranslation@groupIntercepts[[contrast]] <-input[["groupIntercepts"]]
                   object@selectedTranslation@deltaData[[selContrast]] <-input[["deltaData"]]
                   object@selectedTranslation@usedThresholds[[selContrast]] <-input[["usedThresholds"]]
-                  object@selectedTranslation@regModes[[selContrast]] <-input[["regModes"]]
+                  # object@selectedTranslation@regModes[[selContrast]] <-input[["regModes"]]
                   
               }
               if(analysis == "buffering"){
@@ -1071,7 +1175,7 @@ setMethod("anota2seqSetSelectedOutput","Anota2seqDataSet",
                   #object@selectedBuffering@groupIntercepts[[contrast]] <-input[["groupIntercepts"]]
                   object@selectedBuffering@deltaData[[selContrast]] <-input[["deltaData"]]
                   object@selectedBuffering@usedThresholds[[selContrast]] <-input[["usedThresholds"]]
-                  object@selectedBuffering@regModes[[selContrast]] <-input[["regModes"]]
+                  # object@selectedBuffering@regModes[[selContrast]] <-input[["regModes"]]
                   
               }
               return(object)

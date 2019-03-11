@@ -954,7 +954,7 @@ setMethod("anota2seqPlotGenes","Anota2seqDataSet",
                       text(y = lineCount, x = xPos, labels = paste("p-value:",
                                                                    round(tmpP, digits = 4)))
                       lineCount <- lineCount - deltaLine2
-                      text(y = lineCount, x = xPos, labels = paste("adjusted p-value:",
+                      text(y = lineCount, x = xPos, labels = paste("adj. p-value:",
                                                                    round(tmpPadj, digits = 3)))
                       lineCount <- lineCount - deltaLine
                       if (lineCount < 3) {
@@ -989,7 +989,7 @@ setMethod("anota2seqPlotGenes","Anota2seqDataSet",
                           text(y = lineCount, x = xPos, labels = paste("p-value:",
                                                                        round(tmpP, digits = 4)))
                           lineCount <- lineCount - deltaLine2
-                          text(y = lineCount, x = xPos, labels = paste("adjusted p-value:",
+                          text(y = lineCount, x = xPos, labels = paste("adj. p-value:",
                                                                        round(tmpPadj, digits = 3)))
                           lineCount <- lineCount - deltaLine
                           if (lineCount < 3) {

@@ -20,7 +20,7 @@ anota2seqRegModes <- function(Anota2seqDataSet, mRNASelect = c(TRUE,TRUE)){
     if(is.null(anota2seqGetOutputClass(Anota2seqDataSet,"translated mRNA","selected")) == TRUE |
        is.null(anota2seqGetOutputClass(Anota2seqDataSet,"total mRNA","selected")) == TRUE){
         stop("No anota2seqSelSigGenes output for translated mRNA or total mRNA detected.\n No assessment of mRNA Abundance regulation possible.\n Please run anota2seqSelSigGenes for both transalted mRNA and total mRNA.\n")
-        assessmRNA <- FALSE
+        
     }
     if(is.null(anota2seqGetOutputClass(Anota2seqDataSet,"translation","selected"))){
         stop("No selected output for differential translation detected. Please run anota2seqSelSigGenes for analysis of translation.\n")
@@ -36,8 +36,7 @@ anota2seqRegModes <- function(Anota2seqDataSet, mRNASelect = c(TRUE,TRUE)){
                          totalmRNA = rep(list(NULL),dim(tmpContrast)[2]),
                          translatedmRNA = rep(list(NULL),dim(tmpContrast)[2]),
                          useRVM = usedRVM,
-                         mRNASelect = mRNASelect,
-                         regModes = TRUE)
+                         mRNASelect = mRNASelect)
     
     for (cont in 1:dim(tmpContrast)[2]){
         if(assessmRNA == TRUE){
@@ -101,7 +100,7 @@ anota2seqRegModes <- function(Anota2seqDataSet, mRNASelect = c(TRUE,TRUE)){
                 }
             }
             
-            Anota2seqDataSet@selectedTranslation@regModes <- TRUE
+            
         }
         if(usedRVM == FALSE){
             if(nrow(Anota2seqDataSet@selectedTranslation@selectedData[[cont]]) > 0){
@@ -112,7 +111,7 @@ anota2seqRegModes <- function(Anota2seqDataSet, mRNASelect = c(TRUE,TRUE)){
                 Anota2seqDataSet@selectedTranslation@selectedData[[cont]] <- cbind(Anota2seqDataSet@selectedTranslation@selectedData[[cont]],singleRegMode = character(0))
             }
             
-            Anota2seqDataSet@selectedTranslation@regModes <- TRUE
+            
         }
         
         
@@ -171,7 +170,7 @@ anota2seqRegModes <- function(Anota2seqDataSet, mRNASelect = c(TRUE,TRUE)){
                     }
                 }
                 
-                Anota2seqDataSet@selectedBuffering@regModes <- TRUE
+                Anota2seqDataSet@regModes <- TRUE
                 if(nrow(Anota2seqDataSet@selectedBuffering@selectedRvmData[[cont]])>0){
                     # Mark any genes found in translation as translation
                     Anota2seqDataSet@selectedBuffering@selectedRvmData[[cont]][
@@ -195,7 +194,7 @@ anota2seqRegModes <- function(Anota2seqDataSet, mRNASelect = c(TRUE,TRUE)){
                     }
                 }
                 
-                Anota2seqDataSet@selectedBuffering@regModes <- TRUE
+                Anota2seqDataSet@regModes <- TRUE
                 if(nrow(Anota2seqDataSet@selectedBuffering@selectedData[[cont]]) > 0){
                     # Mark any genes found in translation as translation
                     Anota2seqDataSet@selectedBuffering@selectedData[[cont]][
@@ -368,6 +367,7 @@ anota2seqRegModes <- function(Anota2seqDataSet, mRNASelect = c(TRUE,TRUE)){
         Anota2seqDataSet@mRNAAbundance <- mRNAAbundance
     }
     
+    Anota2seqDataSet@regModes <- TRUE
     return(Anota2seqDataSet)
     
 }

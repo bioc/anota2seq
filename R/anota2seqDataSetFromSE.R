@@ -135,7 +135,8 @@ anota2seqDataSetFromSE<- function(
                           selectedTranslation = NULL,
                           selectedBuffering = NULL,
                           mRNAAbundance = NULL,
-                          deltaData = NULL)
+                          deltaData = NULL,
+                          regModes = FALSE)
     message("All input checkpoints passed.\n")
     return(anota2seqClass)
     

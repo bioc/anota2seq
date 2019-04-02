@@ -23,7 +23,7 @@ name (prints to current directory as a pdf). Default is
 "ANOTA2SEQ_translation_vs_mRNA_individual_regressions.pdf "}
 
 \item{nReg}{If generateSingleGenePlots is set to TRUE, nReg can be used to limit the 
-number of output plots. Default is 200.}
+number of output plots. Default is 200. NOTE: this parameter plots the top "n" genes in the same order as the input data.}
 
 \item{correctionMethod}{anota2seq adjusts the omnibus interaction and 
 treatment p-values for multiple testing. Correction method can be 

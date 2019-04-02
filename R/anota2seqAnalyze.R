@@ -32,21 +32,50 @@ anota2seqAnalyze <- function (Anota2seqDataSet, contrasts=NULL, correctionMethod
             message("Starting analysis of translated mRNA (RPFs). \n")
             dataP <- Anota2seqDataSet@dataP
             dataT <- NULL
+            
+            outCols <- c("unadjustedResidError",
+                         "apvEff", "apvMSerror", "apvF", "residDf", "apvP",
+                         "apvPAdj")
+            
+            outColsRvm <- c("apvEff",
+                            "apvRvmMSerror", "apvRvmF", "residRvmDf", "apvRvmP",
+                            "apvRvmPAdj")
         }
         if(analysis[reg]=="total mRNA"){
             message("Starting analysis of total mRNA. \n")
             dataP <- Anota2seqDataSet@dataT
             dataT <- NULL
+            outCols <- c("unadjustedResidError",
+                         "apvEff", "apvMSerror", "apvF", "residDf", "apvP",
+                         "apvPAdj")
+            
+            outColsRvm <- c("apvEff",
+                            "apvRvmMSerror", "apvRvmF", "residRvmDf", "apvRvmP",
+                            "apvRvmPAdj")
         }
         if(analysis[reg] =="translation"){
             dataP <- Anota2seqDataSet@dataP
             dataT <- Anota2seqDataSet@dataT
             message("Starting analysis of translation.\n")
+            outCols <- c("apvSlope", "apvSlopeP", "unadjustedResidError",
+                         "apvEff", "apvMSerror", "apvF", "residDf", "apvP",
+                         "apvPAdj")
+            
+            outColsRvm <- c("apvSlope", "apvSlopeP", "apvEff",
+                            "apvRvmMSerror", "apvRvmF", "residRvmDf", "apvRvmP",
+                            "apvRvmPAdj")
         }
         if(analysis[reg] == "buffering"){
             dataP <- Anota2seqDataSet@dataT
             dataT <- Anota2seqDataSet@dataP
             message("Starting analysis of translational buffering.\n")
+            outCols <- c("apvSlope", "apvSlopeP", "unadjustedResidError",
+                         "apvEff", "apvMSerror", "apvF", "residDf", "apvP",
+                         "apvPAdj")
+            
+            outColsRvm <- c("apvSlope", "apvSlopeP", "apvEff",
+                            "apvRvmMSerror", "apvRvmF", "residRvmDf", "apvRvmP",
+                            "apvRvmPAdj")
         }
         
         phenoVecOrg <- phenoVec
@@ -265,7 +294,8 @@ anota2seqAnalyze <- function (Anota2seqDataSet, contrasts=NULL, correctionMethod
             colnames(tmpMat) <- c("apvSlope", "apvSlopeP", "unadjustedResidError",
                                   "apvEff", "apvMSerror", "apvF", "residDf", "apvP",
                                   "apvPAdj")
-            statsList[[j]] <- tmpMat
+            
+            statsList[[j]] <- tmpMat[,outCols]
         }
         contrastMat <- contrasts(tmpList$phenoType)
         contrastNames <- colnames(contMat)
@@ -311,7 +341,7 @@ anota2seqAnalyze <- function (Anota2seqDataSet, contrasts=NULL, correctionMethod
                              "apvRvmMSerror", "apvRvmF", "residRvmDf", "apvRvmP",
                              "apvRvmPAdj")
             colnames(tmpMat) <- tmpColnames
-            statsListRvm[[j]] <- tmpMat
+            statsListRvm[[j]] <- tmpMat[,outColsRvm]
         }
         
         if(analysis[reg]=="total mRNA"){

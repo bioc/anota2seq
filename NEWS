@@ -1,4 +1,4 @@
-CHANGES IN VERSION 1.5.0
+CHANGES IN VERSION 1.4.2
 --------------------------
     
     o We added a new option to the output parameter of the anota2seqGetOutput function, more details can be found in the function help.

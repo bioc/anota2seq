@@ -167,7 +167,7 @@ s4MethodChecks <- function(object,selContrast,output,analysis,useRVM,getRVM,visu
         if(max(selContrast) > dim(object@contrasts)[2]){
             stop("The selected contrasts does not exist. selContrast must be a numeric vector with 1 or more contrasts.\n The values cannot be higher than the number of columns in the contrast matrix.")
         }
-        if(selContrast%in%c(TRUE,FALSE) & class(selContrast) == "logical"){
+        if(selContrast%in%c(TRUE,FALSE) & is.logical(selContrast)){
             stop("The selected contrasts does not exist. selContrast must be a numeric vector with 1 or more contrasts.\n The values cannot be higher than the number of columns in the contrast matrix.")
         }
     }
@@ -430,7 +430,7 @@ anota2seqCheckInput <- function(dataP=NULL,dataT=NULL,phenoVec=NULL,batchVec=NUL
         stop("Rownames of dataP and dataT do not follow the same order.\n")
     }
     if (is.null(contrasts) == FALSE) {
-        if(!class(contrasts) == "matrix"){
+        if(!is.matrix(contrasts)){
             stop("custom contrasts need to be provided as a matrix.\nPlease check your contrast matrix.\n")
         }
         if (dim(contrasts)[2] != (nPheno - 1)) {

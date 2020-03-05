@@ -316,7 +316,7 @@ anota2seqCheckParameter <- function(normalize,dataType,transformation,filterZero
             }
         }
         if(is.null(varCutOff) == FALSE){
-            if(class(varCutOff)!= "numeric"){
+            if(!is.numeric(varCutOff)){
                 stop("Please provde a numeric varCutOff parameter.\n")
             }
         }

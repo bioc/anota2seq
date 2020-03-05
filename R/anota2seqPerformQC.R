@@ -6,7 +6,7 @@ anota2seqPerformQC <- function(Anota2seqDataSet,
     if(is.null(Anota2seqDataSet)){
         stop("Please provide an Anota2seqDataSet.\n")
     }
-    if(class(Anota2seqDataSet)!= "Anota2seqDataSet"){
+    if(!is(Anota2seqDataSet, "Anota2seqDataSet")){
         stop("Please provide an Anota2seqDataSet.\n")
     }
     if(is.null(generateSingleGenePlots)){
@@ -48,13 +48,13 @@ anota2seqPerformQC <- function(Anota2seqDataSet,
     if(is.null(nReg)){
         stop("Please provide nReg parameter. Must be a numeric value.\n")
     }
-    if(!class(nReg)%in%c("numeric")){
+    if(!is.numeric(nReg)){
         stop("nReg parameter must be a numeric value.\n")
     }
     if(is.null(nDfbSimData)){
         stop("Please provide nDfbSimData parameter. Must be a numeric value of 0 or greater.\n")
     }
-    if(!class(nDfbSimData)%in%c("numeric")){
+    if(!is.numeric(nDfbSimData)){
         stop("nDfbSimData parameter must be a numeric value of 0 or greater.\n")
     }
     if(is.null(useRVM) | !useRVM%in%c(TRUE,FALSE)){

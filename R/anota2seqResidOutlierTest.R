@@ -6,7 +6,7 @@ anota2seqResidOutlierTest <- function(Anota2seqDataSet, confInt=0.01, iter=5,
     if(is.null(Anota2seqDataSet)){
         stop("Please provide an Anota2seqDataSet.\n")
     }
-    if(class(Anota2seqDataSet)!= "Anota2seqDataSet"){
+    if(!is(Anota2seqDataSet,"Anota2seqDataSet")){
         stop("Please provide an Anota2seqDataSet.\n")
     }
     if(is.null(Anota2seqDataSet@qualityControl)){
@@ -15,13 +15,13 @@ anota2seqResidOutlierTest <- function(Anota2seqDataSet, confInt=0.01, iter=5,
     if(is.null(confInt)){
         stop("Please provide confInt parameter. Must a numeric value between 0 and 1.\n")
     }
-    if(!class(confInt)%in%c("numeric")){
+    if(!is.numeric(confInt)){
         stop("confInt parameter must be a numeric value between 0 and 1.\n")
     }
     if(is.null(iter)){
         stop("Please provide iter parameter. Must a numeric value of 1 and greater.\n")
     }
-    if(!class(iter)%in%c("numeric")){
+    if(!is.numeric(iter)){
         stop("iter parameter must be a numeric value of 1 and greater.\n")
     }
     if(is.null(generateSingleGenePlots)){
@@ -33,7 +33,7 @@ anota2seqResidOutlierTest <- function(Anota2seqDataSet, confInt=0.01, iter=5,
     if(is.null(nGraphs)){
         stop("Please provide nGraphs parameter. Must a numeric value of 1 and greater.\n")
     }
-    if(!class(nGraphs)%in%c("numeric")){
+    if(!is.numeric(nGraphs)){
         stop("nGraphs parameter must be a numeric value of 1 and greater.\n")
     }
     if(is.null(generateSummaryPlot)){

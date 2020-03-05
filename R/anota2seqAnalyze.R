@@ -5,7 +5,7 @@ anota2seqAnalyze <- function (Anota2seqDataSet, contrasts=NULL, correctionMethod
     if(is.null(Anota2seqDataSet)){
         stop("Please provide an Anota2seqDataSet.\n")
     }
-    if(class(Anota2seqDataSet)!= "Anota2seqDataSet"){
+    if(!is(Anota2seqDataSet,"Anota2seqDataSet")){
         stop("Please provide an Anota2seqDataSet.\n")
     }
     anota2seqCheckInput(dataP = Anota2seqDataSet@dataP,

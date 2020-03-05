@@ -14,7 +14,7 @@ anota2seqDataSetFromSE<- function(
     anota2seqCheckParameter(normalize,dataType,transformation,filterZeroGenes,varCutOff,inFunc="dataset")
     #if summarizedExperiment is supplied dataP,dataT must be NULL ...
     if(is.null(se) == FALSE){
-        if(class(se) != "SummarizedExperiment"){
+        if(!is(se, "SummarizedExperiment")){
             stop("Parameter se must be an object of class SummerizedExperiment.")
         }
     }

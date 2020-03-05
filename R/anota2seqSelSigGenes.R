@@ -18,7 +18,7 @@ anota2seqSelSigGenes <- function (Anota2seqDataSet, useRVM = TRUE,
     if(is.null(Anota2seqDataSet)){
         stop("Please provide an Anota2seqDataSet.\n")
     }
-    if(class(Anota2seqDataSet)!= "Anota2seqDataSet"){
+    if(!is(Anota2seqDataSet, "Anota2seqDataSet")){
         stop("Please provide an Anota2seqDataSet.\n")
     }
     

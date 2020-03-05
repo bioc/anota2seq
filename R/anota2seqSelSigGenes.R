@@ -9,6 +9,11 @@ anota2seqSelSigGenes <- function (Anota2seqDataSet, useRVM = TRUE,
                                   maxPAdj = NULL, selDeltaPT = NULL, selDeltaTP = NULL,
                                   selDeltaP = NULL, selDeltaT = NULL, sortBy = c("rvmP", "none", "Eff", "p"))
 {
+    ## to do 
+    ## make a regmodes check when this function is run
+    ## delete previosuly set regmodes
+    
+    ## remove selIds parameter
     
     if(is.null(Anota2seqDataSet)){
         stop("Please provide an Anota2seqDataSet.\n")
@@ -144,7 +149,7 @@ anota2seqSelSigGenes <- function (Anota2seqDataSet, useRVM = TRUE,
                    slopeP,minEff,maxP,maxPAdj,selDeltaPT,
                    selDeltaTP,selDeltaP,selDeltaT)
     for(cutOff in 1:length(cutOffVec)){
-        if(class(cutOffVec[cutOff])%in%c("NULL","numeric") == FALSE){
+        if(!is.null(cutOffVec[cutOff])& !is.numeric(cutOffVec[cutOff])){
             stop("Supplied filter parameters must be numeric.\n")
         }
     }

@@ -1,3 +1,8 @@
+CHANGES IN VERSION 1.9.1
+--------------------------
+
+    o Fixed coding that would results in errors in R version 4.0 related to used of class(...) == "x".
+
 CHANGES IN VERSION 1.5.0
 --------------------------
     
